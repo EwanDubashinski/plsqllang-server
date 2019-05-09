@@ -1,12 +1,15 @@
 package ru.chufeng.plsqllang.server;
 
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.ConsoleErrorListener;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.eclipse.lsp4j.*;
 import org.eclipse.lsp4j.services.TextDocumentService;
+import ru.chufeng.plsqllang.parser.PlSqlLexer;
+import ru.chufeng.plsqllang.parser.PlSqlParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class PlSqlTextDocumentService implements TextDocumentService {
 
@@ -42,7 +45,6 @@ public class PlSqlTextDocumentService implements TextDocumentService {
             List<Diagnostic> currentDiagnostics = validateDocument(uri, text);
             diagnostics.addAll(currentDiagnostics);
         }
-
         plSqlLangServer.getLanguageClient().publishDiagnostics(new PublishDiagnosticsParams(uri, diagnostics));
     }
 
@@ -56,19 +58,40 @@ public class PlSqlTextDocumentService implements TextDocumentService {
     @Override
     public void didSave(DidSaveTextDocumentParams didSaveTextDocumentParams) {
         /* TODO depends on settings: check on change or on save */
+//        String uri = didSaveTextDocumentParams.getTextDocument().getUri();
+//        List<Diagnostic> diagnostics = validateDocument(uri, didSaveTextDocumentParams.getText());
+//        plSqlLangServer.getLanguageClient().publishDiagnostics(new PublishDiagnosticsParams(uri, diagnostics));
     }
 
-    private List<Diagnostic> validateDocument(String xmlDocumentUri, String xmlDocumentContent) {
+    private List<Diagnostic> validateDocument(String documentUri, String documentContent) {
+//        System.out.println("validateDocument start: " + System.currentTimeMillis());
         List<Diagnostic> diagnostics = new ArrayList<>();
 
-        PlSqlIssue issue = new PlSqlIssue(2, 3, "Test issue");
-        issue.setSeverity(DiagnosticSeverity.Warning);
+        PlSqlLexer lexer = new PlSqlLexer(CharStreams.fromString(documentContent));
+        PlSqlParser parser = new PlSqlParser(new CommonTokenStream(lexer));
+        SyntaxErrorListener errorListener = new SyntaxErrorListener();
+        parser.removeErrorListener(ConsoleErrorListener.INSTANCE);
+        parser.addErrorListener(errorListener);
+        ParseTree tree = parser.sql_script();
 
+//        System.out.println("validateDocument start: " + System.currentTimeMillis());
+        PlSqlIssue issue;
+
+        for (SyntaxError error : errorListener.getSyntaxErrors()) {
+//            System.out.println(error);
+
+            issue = new PlSqlIssue(error.getLine(), error.getCharPositionInLine(), error.getMessage(), DiagnosticSeverity.Error);
+
+            Position start = new Position(issue.getLine() - 1, issue.getColumn());
+            Position end = new Position(issue.getLine() - 1, issue.getColumn() + error.getOffendingSymbol().getText().length());
+
+            Diagnostic diagnostic = new Diagnostic(new Range(start, end), issue.getDescription(), issue.getSeverity(), Constants.LANGUAGE);
+            diagnostics.add(diagnostic);
+        }
+
+        issue = new PlSqlIssue(1, 1, "Test issue ", DiagnosticSeverity.Error);
         Position start = new Position(issue.getLine() - 1, issue.getColumn() - 1);
-        Position end = new Position(issue.getLine() - 1, issue.getColumn() - 1);
-
-        end.setCharacter(9);
-
+        Position end = new Position(issue.getLine() - 1, issue.getColumn() + 1);
         Diagnostic diagnostic = new Diagnostic(new Range(start, end), issue.getDescription(), issue.getSeverity(), Constants.LANGUAGE);
         diagnostics.add(diagnostic);
 

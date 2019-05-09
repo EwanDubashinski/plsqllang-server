@@ -67,6 +67,17 @@
             <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
             <version>0.7.1</version>
         </dependency>
+        <dependency>
+            <groupId>ru.chufeng.plsqllang</groupId>
+            <artifactId>parser</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7.2</version>
+        </dependency>
 
     </dependencies>
 </project>

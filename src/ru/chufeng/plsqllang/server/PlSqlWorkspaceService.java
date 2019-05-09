@@ -3,7 +3,10 @@ package ru.chufeng.plsqllang.server;
 import com.google.gson.Gson;
 import org.eclipse.lsp4j.DidChangeConfigurationParams;
 import org.eclipse.lsp4j.DidChangeWatchedFilesParams;
+import org.eclipse.lsp4j.ExecuteCommandParams;
 import org.eclipse.lsp4j.services.WorkspaceService;
+
+import java.util.concurrent.CompletableFuture;
 
 public class PlSqlWorkspaceService implements WorkspaceService {
     private final PlSqlLangServer plSqlLangServer;
@@ -19,5 +22,10 @@ public class PlSqlWorkspaceService implements WorkspaceService {
     @Override
     public void didChangeWatchedFiles(DidChangeWatchedFilesParams didChangeWatchedFilesParams) {
 
+    }
+
+    @Override
+    public CompletableFuture<Object> executeCommand(ExecuteCommandParams params) {
+        return null;
     }
 }

@@ -14,6 +14,13 @@ public class PlSqlIssue {
         this.description = description;
     }
 
+    public PlSqlIssue(int line, int column, String description, DiagnosticSeverity severity) {
+        this.line = line;
+        this.column = column;
+        this.description = description;
+        this.severity = severity;
+    }
+
     public int getLine() {
         return line;
     }

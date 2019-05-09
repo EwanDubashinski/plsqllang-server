@@ -4,6 +4,7 @@ import org.eclipse.lsp4j.InitializeParams;
 import org.eclipse.lsp4j.InitializeResult;
 import org.eclipse.lsp4j.ServerCapabilities;
 import org.eclipse.lsp4j.TextDocumentSyncKind;
+import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
 import org.eclipse.lsp4j.services.LanguageClient;
 import org.eclipse.lsp4j.services.LanguageServer;
 import org.eclipse.lsp4j.services.TextDocumentService;
@@ -37,6 +38,14 @@ public class PlSqlLangServer implements LanguageServer {
         InitializeResult result = new InitializeResult(capabilities);
         return CompletableFuture.completedFuture(result);
     }
+
+    @JsonRequest("getTree")
+    public CompletableFuture<String> getTree(Object params) {
+        return CompletableFuture.completedFuture("['T_TEST_1','TEMP','MONEY']");
+//        return CompletableFuture.completedFuture("ready! =)");
+    }
+
+
 
     public CompletableFuture<Object> shutdown() {
         return null;
