@@ -71,6 +71,7 @@ public class PlSqlLangServer implements LanguageServer {
         Type itemsMapType = new TypeToken<Map<String, String>>() {}.getType();
         Gson gson = new Gson();
         Map<String, String> map = gson.fromJson(params, itemsMapType);
+        languageClient.telemetryEvent("getDDL: " + map.get("name"));
         return CompletableFuture.completedFuture(new DdlGen(map.get("connection"), map.get("name"), map.get("type"), this).get());
     }
 

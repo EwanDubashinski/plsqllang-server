@@ -1,11 +1,14 @@
 package ru.chufeng.plsqllang.server.database;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import ru.chufeng.plsqllang.server.PlSqlLangServer;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DdlGen {
     private String connectionString;
@@ -45,13 +48,19 @@ public class DdlGen {
             Clob ddl = stmt.getClob (1);
             result = ddl.getSubString(1, (int) ddl.length());
         } catch(SQLException se) {
+//            System.out.println(se.getMessage());
             languageServer.getLanguageClient().telemetryEvent(se.getMessage());
         }
-        JsonObject json = new JsonObject();
-        json.add("name", new JsonPrimitive(objectName));
-        json.add("type", new JsonPrimitive(objectType));
-        json.add("ddl", new JsonPrimitive(result));
-        return json.getAsString();
+        Map<String,String> map = new HashMap<>();
+        map.put("name", objectName);
+        map.put("type", objectType);
+        map.put("ddl", result);
+        return new Gson().toJson(map);
     }
+
+//    public static void main(String[] args) {
+//        DdlGen gen = new DdlGen("biss_dev2/biss@milesplus2:1521/biss", "V_FORM_UESTOER", "VIEW", null);
+//        System.out.println(gen.get());
+//    }
 
 }
