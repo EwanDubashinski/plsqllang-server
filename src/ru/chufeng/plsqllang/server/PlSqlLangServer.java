@@ -6,12 +6,15 @@ import org.eclipse.lsp4j.InitializeParams;
 import org.eclipse.lsp4j.InitializeResult;
 import org.eclipse.lsp4j.ServerCapabilities;
 import org.eclipse.lsp4j.TextDocumentSyncKind;
+import org.eclipse.lsp4j.jsonrpc.services.JsonNotification;
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
 import org.eclipse.lsp4j.services.LanguageClient;
 import org.eclipse.lsp4j.services.LanguageServer;
 import org.eclipse.lsp4j.services.TextDocumentService;
 import org.eclipse.lsp4j.services.WorkspaceService;
+import ru.chufeng.plsqllang.server.database.DdlGen;
 import ru.chufeng.plsqllang.server.database.ObjectCollection;
+import ru.chufeng.plsqllang.server.database.Query;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -54,7 +57,22 @@ public class PlSqlLangServer implements LanguageServer {
 //        return CompletableFuture.completedFuture("ready! =)");
     }
 
+    @JsonRequest("getQueryResults")
+    public CompletableFuture<String> getQueryResults(String params) {
+        Type itemsMapType = new TypeToken<Map<String, String>>() {}.getType();
+        Gson gson = new Gson();
+        Map<String, String> map = gson.fromJson(params, itemsMapType);
+//        languageClient.telemetryEvent("Test telemetryEvent");
+        return CompletableFuture.completedFuture(new Query(map.get("connection"), map.get("query"), this).getResultsJSON());
+    }
 
+    @JsonRequest("getDDL")
+    public CompletableFuture<String> getDDL(String params) {
+        Type itemsMapType = new TypeToken<Map<String, String>>() {}.getType();
+        Gson gson = new Gson();
+        Map<String, String> map = gson.fromJson(params, itemsMapType);
+        return CompletableFuture.completedFuture(new DdlGen(map.get("connection"), map.get("name"), map.get("type"), this).get());
+    }
 
     public CompletableFuture<Object> shutdown() {
         return null;
