@@ -21,7 +21,6 @@ public class Query {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
         try (Connection conn = ConnectionPool.getInstance().get(connectionString)){
-//        try (Connection conn = ConnectionPool.getInstance(connectionString).get()){
 
             Statement stmt;
             stmt = conn.createStatement();
@@ -30,7 +29,7 @@ public class Query {
             rs.next();
             int count = rs.getMetaData().getColumnCount();
             ArrayList<String> headers = new ArrayList<>();
-            for (int i = 0; i <=count ; i++) {
+            for (int i = 1; i <=count ; i++) {
                 headers.add(rs.getMetaData().getColumnName(i));
             }
             result.add(headers);
