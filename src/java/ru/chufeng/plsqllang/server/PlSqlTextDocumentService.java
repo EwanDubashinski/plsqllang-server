@@ -67,7 +67,7 @@ public class PlSqlTextDocumentService implements TextDocumentService {
 //        System.out.println("validateDocument start: " + System.currentTimeMillis());
         List<Diagnostic> diagnostics = new ArrayList<>();
 
-        PlSqlLexer lexer = new PlSqlLexer(CharStreams.fromString(documentContent));
+        PlSqlLexer lexer = new PlSqlLexer(CharStreams.fromString(documentContent.toUpperCase()));
         PlSqlParser parser = new PlSqlParser(new CommonTokenStream(lexer));
         SyntaxErrorListener errorListener = new SyntaxErrorListener();
         parser.removeErrorListener(ConsoleErrorListener.INSTANCE);
@@ -88,12 +88,12 @@ public class PlSqlTextDocumentService implements TextDocumentService {
             Diagnostic diagnostic = new Diagnostic(new Range(start, end), issue.getDescription(), issue.getSeverity(), Constants.LANGUAGE);
             diagnostics.add(diagnostic);
         }
-
-        issue = new PlSqlIssue(1, 1, "Test issue ", DiagnosticSeverity.Error);
-        Position start = new Position(issue.getLine() - 1, issue.getColumn() - 1);
-        Position end = new Position(issue.getLine() - 1, issue.getColumn() + 1);
-        Diagnostic diagnostic = new Diagnostic(new Range(start, end), issue.getDescription(), issue.getSeverity(), Constants.LANGUAGE);
-        diagnostics.add(diagnostic);
+//
+//        issue = new PlSqlIssue(1, 1, "Test issue ", DiagnosticSeverity.Error);
+//        Position start = new Position(issue.getLine() - 1, issue.getColumn() - 1);
+//        Position end = new Position(issue.getLine() - 1, issue.getColumn() + 1);
+//        Diagnostic diagnostic = new Diagnostic(new Range(start, end), issue.getDescription(), issue.getSeverity(), Constants.LANGUAGE);
+//        diagnostics.add(diagnostic);
 
         return diagnostics;
     }

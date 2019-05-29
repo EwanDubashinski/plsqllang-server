@@ -1,13 +1,9 @@
 package ru.chufeng.plsqllang.server.database;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 
 public class ObjectCollection {
 
@@ -26,7 +22,8 @@ public class ObjectCollection {
 
     private void fillObjects() {
 
-        try (Connection conn = ConnectionSingleton.getInstance(connectionString).get()){
+        try (Connection conn = ConnectionPool.getInstance().get(connectionString)){
+//        try (Connection conn = ConnectionPool.getInstance(connectionString).get()){
 
             Statement stmt;
             stmt = conn.createStatement();

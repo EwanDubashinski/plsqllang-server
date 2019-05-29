@@ -1,12 +1,9 @@
 package ru.chufeng.plsqllang.server.database;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import ru.chufeng.plsqllang.server.PlSqlLangServer;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +32,8 @@ public class DdlGen {
 
     public String get() {
         String result = "";
-        try (Connection conn = ConnectionSingleton.getInstance(connectionString).get()){
+        try (Connection conn = ConnectionPool.getInstance().get(connectionString)){
+//        try (Connection conn = ConnectionPool.getInstance(connectionString).get()){
             CallableStatement stmt = conn.prepareCall("{? = call DBMS_METADATA.GET_DDL(?, ?)}");
 
             stmt.registerOutParameter (1, Types.CLOB);
