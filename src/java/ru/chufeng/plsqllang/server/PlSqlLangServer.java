@@ -2,21 +2,20 @@ package ru.chufeng.plsqllang.server;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.eclipse.lsp4j.InitializeParams;
-import org.eclipse.lsp4j.InitializeResult;
-import org.eclipse.lsp4j.ServerCapabilities;
-import org.eclipse.lsp4j.TextDocumentSyncKind;
+import org.eclipse.lsp4j.*;
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification;
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
 import org.eclipse.lsp4j.services.LanguageClient;
 import org.eclipse.lsp4j.services.LanguageServer;
 import org.eclipse.lsp4j.services.TextDocumentService;
 import org.eclipse.lsp4j.services.WorkspaceService;
+import ru.chufeng.plsqllang.server.database.ConnectionPool;
 import ru.chufeng.plsqllang.server.database.DdlGen;
 import ru.chufeng.plsqllang.server.database.ObjectCollection;
 import ru.chufeng.plsqllang.server.database.Query;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -27,6 +26,7 @@ public class PlSqlLangServer implements LanguageServer {
     private final PlSqlTextDocumentService plSqlTextDocumentService;
     private final PlSqlWorkspaceService plSqlWorkspaceService;
     private LanguageClient languageClient;
+    private String activeConnection;
 
     public PlSqlLangServer() {
         plSqlTextDocumentService = new PlSqlTextDocumentService(this);
@@ -44,6 +44,12 @@ public class PlSqlLangServer implements LanguageServer {
     public CompletableFuture<InitializeResult> initialize(InitializeParams initializeParams) {
         ServerCapabilities capabilities = new ServerCapabilities();
         capabilities.setTextDocumentSync(TextDocumentSyncKind.Full);
+
+        final CompletionOptions completionOptions = new CompletionOptions();
+        completionOptions.setTriggerCharacters(Arrays.asList("FROM ", "from "));
+
+        capabilities.setCompletionProvider(completionOptions);
+
         InitializeResult result = new InitializeResult(capabilities);
         return CompletableFuture.completedFuture(result);
     }
@@ -73,6 +79,20 @@ public class PlSqlLangServer implements LanguageServer {
         Map<String, String> map = gson.fromJson(params, itemsMapType);
         languageClient.telemetryEvent("getDDL: " + map.get("name"));
         return CompletableFuture.completedFuture(new DdlGen(map.get("connection"), map.get("name"), map.get("type"), this).get());
+    }
+
+    @JsonNotification("activateConnection")
+    public void activateConnection(String connectionString) {
+        this.activeConnection = connectionString;
+        ConnectionPool.getInstance().get(connectionString);
+    }
+
+    public String getActiveConnection() {
+        return activeConnection;
+    }
+
+    public boolean isConnected() {
+        return this.activeConnection != null;
     }
 
     public CompletableFuture<Object> shutdown() {
