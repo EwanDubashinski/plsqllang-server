@@ -13,9 +13,6 @@ public class ObjectCollection {
 
     public ObjectCollection(String connectionString, String objectType) {
         this.connectionString = connectionString;
-
-
-
         this.sql = String.format(sql, objectType);
         fillObjects();
     }

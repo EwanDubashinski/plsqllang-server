@@ -10,21 +10,42 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>maven.oracle.com</id>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--            <url>https://maven.oracle.com</url>-->
+<!--            <layout>default</layout>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <id>maven.oracle.com</id>-->
+<!--            <url>https://maven.oracle.com</url>-->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
     <build>
         <sourceDirectory>src/java</sourceDirectory>
         <testSourceDirectory>src/test</testSourceDirectory>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.0</version>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -48,6 +69,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
@@ -84,7 +106,7 @@
         <dependency>
             <groupId>org.eclipse.lsp4j</groupId>
             <artifactId>org.eclipse.lsp4j</artifactId>
-            <version>0.7.1</version>
+            <version>0.12.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
@@ -96,12 +118,13 @@
         <dependency>
             <groupId>org.eclipse.lsp4j</groupId>
             <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
-            <version>0.7.1</version>
+            <version>0.12.0</version>
+<!--            <version>0.7.1</version>-->
         </dependency>
         <dependency>
             <groupId>ru.chufeng.plsqllang</groupId>
             <artifactId>parser</artifactId>
-            <version>1.0</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
         <dependency>
@@ -109,8 +132,9 @@
             <artifactId>antlr4-runtime</artifactId>
             <version>4.7.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
         <dependency>
-            <groupId>com.oracle.jdbc</groupId>
+            <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
             <version>12.2.0.1</version>
         </dependency>
@@ -135,4 +159,5 @@
         </dependency>
 
     </dependencies>
+
 </project>

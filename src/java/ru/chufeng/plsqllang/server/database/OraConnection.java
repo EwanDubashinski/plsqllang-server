@@ -42,7 +42,6 @@ public class OraConnection {
             } else {
                 setException(ex.getErrorCode(), ex.getLocalizedMessage());
             }
-//            System.out.println(ex.getMessage());
         }
         try {
             isValid = connection.isValid(10);
@@ -78,11 +77,5 @@ public class OraConnection {
     public boolean isValid() {
         return isValid;
     }
-
-    //    public static void main(String[] args) {
-//        OraConnection oraConnection = new OraConnection("hr/hr@localhost:1521/xepdb1");
-//        System.out.println(oraConnection.errorCode);
-//    }
-
 
 }

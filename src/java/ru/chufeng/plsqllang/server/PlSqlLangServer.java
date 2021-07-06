@@ -49,6 +49,7 @@ public class PlSqlLangServer implements LanguageServer {
         completionOptions.setTriggerCharacters(Arrays.asList("FROM ", "from "));
 
         capabilities.setCompletionProvider(completionOptions);
+        capabilities.setDocumentSymbolProvider(true);
 
         InitializeResult result = new InitializeResult(capabilities);
         return CompletableFuture.completedFuture(result);
