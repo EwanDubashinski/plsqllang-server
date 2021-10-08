@@ -64,23 +64,23 @@ public class PlSqlTextDocumentService implements TextDocumentService {
     public void didSave(DidSaveTextDocumentParams didSaveTextDocumentParams) {
     }
 
-    @Override
-    public CompletableFuture<Either<List<CompletionItem>, CompletionList>> completion(CompletionParams position) {
-        final List<CompletionItem> completions = new ArrayList<>();
-        return CompletableFuture.supplyAsync(() -> {
-            int lineNum = position.getPosition().getLine();
-            int character = position.getPosition().getCharacter();
-            String text = openDocuments.get(position.getTextDocument().getUri());
-            BufferedReader reader = new BufferedReader(new StringReader(text));
-            String line = reader.lines().skip(lineNum).findFirst().orElse(null);
-            if (plSqlLangServer.isConnected() && line != null && line.toUpperCase().substring(0, character).trim().endsWith("FROM")) {
-                CompletionProvider provider = new CompletionProvider(plSqlLangServer);
-                completions.addAll(provider.getTables());
-            }
-
-            return Either.forLeft(completions);
-        });
-    }
+//    @Override
+//    public CompletableFuture<Either<List<CompletionItem>, CompletionList>> completion(CompletionParams position) {
+//        final List<CompletionItem> completions = new ArrayList<>();
+//        return CompletableFuture.supplyAsync(() -> {
+//            int lineNum = position.getPosition().getLine();
+//            int character = position.getPosition().getCharacter();
+//            String text = openDocuments.get(position.getTextDocument().getUri());
+//            BufferedReader reader = new BufferedReader(new StringReader(text));
+//            String line = reader.lines().skip(lineNum).findFirst().orElse(null);
+//            if (plSqlLangServer.isConnected() && line != null && line.toUpperCase().substring(0, character).trim().endsWith("FROM")) {
+//                CompletionProvider provider = new CompletionProvider(plSqlLangServer);
+//                completions.addAll(provider.getTables());
+//            }
+//
+//            return Either.forLeft(completions);
+//        });
+//    }
 
     public List<Diagnostic> validateDocument(String documentUri, String documentContent) {
         List<Diagnostic> diagnostics = new ArrayList<>();
@@ -108,15 +108,15 @@ public class PlSqlTextDocumentService implements TextDocumentService {
         return diagnostics;
     }
 
-    @Override
-    public CompletableFuture<List<Either<SymbolInformation, DocumentSymbol>>> documentSymbol(DocumentSymbolParams params) {
-//        String text = openDocuments.get(params.getTextDocument().getUri());
-//        tree.getChildCount();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        SymbolsListener symbolsListener = new SymbolsListener();
-
-        walker.walk(symbolsListener, tree);
-
-        return CompletableFuture.completedFuture(symbolsListener.getSymbols());
-    }
+//    @Override
+//    public CompletableFuture<List<Either<SymbolInformation, DocumentSymbol>>> documentSymbol(DocumentSymbolParams params) {
+////        String text = openDocuments.get(params.getTextDocument().getUri());
+////        tree.getChildCount();
+//        ParseTreeWalker walker = new ParseTreeWalker();
+//        SymbolsListener symbolsListener = new SymbolsListener();
+//
+//        walker.walk(symbolsListener, tree);
+//
+//        return CompletableFuture.completedFuture(symbolsListener.getSymbols());
+//    }
 }

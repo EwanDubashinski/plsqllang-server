@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class PlSqlServerStdioLauncher {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         PlSqlLangServer server = new PlSqlLangServer();
-        PrintWriter writer = new PrintWriter("C:\\Source\\plsqllang\\client\\plsql-lsp\\server\\trace_plsql_server.log");
-        Launcher<LanguageClient> launcher = LSPLauncher.createServerLauncher(server, System.in, System.out, false, writer);
+//        PrintWriter writer = new PrintWriter("C:\\Source\\plsqllang\\client\\plsql-lsp\\server\\trace_plsql_server.log");
+        Launcher<LanguageClient> launcher = LSPLauncher.createServerLauncher(server, System.in, System.out, false, null);
         server.setClient(launcher.getRemoteProxy());
         launcher.startListening();
     }

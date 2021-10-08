@@ -45,11 +45,11 @@ public class PlSqlLangServer implements LanguageServer {
         ServerCapabilities capabilities = new ServerCapabilities();
         capabilities.setTextDocumentSync(TextDocumentSyncKind.Full);
 
-        final CompletionOptions completionOptions = new CompletionOptions();
-        completionOptions.setTriggerCharacters(Arrays.asList("FROM ", "from "));
+//        final CompletionOptions completionOptions = new CompletionOptions();
+//        completionOptions.setTriggerCharacters(Arrays.asList("FROM ", "from "));
 
-        capabilities.setCompletionProvider(completionOptions);
-        capabilities.setDocumentSymbolProvider(true);
+//        capabilities.setCompletionProvider(completionOptions);
+//        capabilities.setDocumentSymbolProvider(true);
 
         InitializeResult result = new InitializeResult(capabilities);
         return CompletableFuture.completedFuture(result);
