@@ -1,4 +1,4 @@
-package ru.chufeng.plsqllang.server.database;
+package com.oakenscience.plsqllang.server.database;
 
 import java.sql.Connection;
 import java.sql.SQLException;

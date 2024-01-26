@@ -1,21 +1,15 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.eclipse.lsp4j.*;
-import org.eclipse.lsp4j.jsonrpc.messages.Either;
 import org.eclipse.lsp4j.services.TextDocumentService;
-import ru.chufeng.plsqllang.parser.PlSqlLexer;
-import ru.chufeng.plsqllang.parser.PlSqlParser;
-import ru.chufeng.plsqllang.server.database.CompletionProvider;
+import com.oakenscience.plsqllang.parser.PlSqlLexer;
+import com.oakenscience.plsqllang.parser.PlSqlParser;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 public class PlSqlTextDocumentService implements TextDocumentService {
 

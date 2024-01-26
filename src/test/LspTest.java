@@ -1,6 +1,6 @@
 import org.eclipse.lsp4j.Diagnostic;
 import org.junit.jupiter.api.*;
-import ru.chufeng.plsqllang.server.PlSqlTextDocumentService;
+import com.oakenscience.plsqllang.server.PlSqlTextDocumentService;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ public class LspTest {
         String code = "SELECT NULL FROM DUAL";
         PlSqlTextDocumentService documentService = new PlSqlTextDocumentService(null);
         List<Diagnostic> diagnostics = documentService.validateDocument("", code);
-        assertEquals("syntax errors count should be 0", 0, diagnostics.size());
+        Assertions.assertEquals(0, diagnostics.size(), "syntax errors count should be 0");
     }
 }

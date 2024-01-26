@@ -1,9 +1,8 @@
-package ru.chufeng.plsqllang.server.database;
+package com.oakenscience.plsqllang.server.database;
 
-import com.google.gson.Gson;
 import org.eclipse.lsp4j.CompletionItem;
 import org.eclipse.lsp4j.CompletionItemKind;
-import ru.chufeng.plsqllang.server.PlSqlLangServer;
+import com.oakenscience.plsqllang.server.PlSqlLangServer;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,7 +1,11 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.oakenscience.plsqllang.server.database.ConnectionPool;
+import com.oakenscience.plsqllang.server.database.DdlGen;
+import com.oakenscience.plsqllang.server.database.ObjectCollection;
+import com.oakenscience.plsqllang.server.database.Query;
 import org.eclipse.lsp4j.*;
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification;
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
@@ -9,15 +13,9 @@ import org.eclipse.lsp4j.services.LanguageClient;
 import org.eclipse.lsp4j.services.LanguageServer;
 import org.eclipse.lsp4j.services.TextDocumentService;
 import org.eclipse.lsp4j.services.WorkspaceService;
-import ru.chufeng.plsqllang.server.database.ConnectionPool;
-import ru.chufeng.plsqllang.server.database.DdlGen;
-import ru.chufeng.plsqllang.server.database.ObjectCollection;
-import ru.chufeng.plsqllang.server.database.Query;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 

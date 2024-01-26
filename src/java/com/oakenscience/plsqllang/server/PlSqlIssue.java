@@ -1,4 +1,4 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
 import org.eclipse.lsp4j.DiagnosticSeverity;
 

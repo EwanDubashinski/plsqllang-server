@@ -1,6 +1,5 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
-import com.google.gson.Gson;
 import org.eclipse.lsp4j.DidChangeConfigurationParams;
 import org.eclipse.lsp4j.DidChangeWatchedFilesParams;
 import org.eclipse.lsp4j.ExecuteCommandParams;

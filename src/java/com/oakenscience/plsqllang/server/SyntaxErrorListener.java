@@ -1,4 +1,4 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;

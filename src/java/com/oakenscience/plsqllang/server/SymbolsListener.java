@@ -1,9 +1,9 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
 import org.eclipse.lsp4j.*;
 import org.eclipse.lsp4j.jsonrpc.messages.Either;
-import ru.chufeng.plsqllang.parser.PlSqlParser;
-import ru.chufeng.plsqllang.parser.PlSqlParserBaseListener;
+import com.oakenscience.plsqllang.parser.PlSqlParser;
+import com.oakenscience.plsqllang.parser.PlSqlParserBaseListener;
 
 import java.util.ArrayList;
 import java.util.List;

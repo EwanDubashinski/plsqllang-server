@@ -1,18 +1,10 @@
-package ru.chufeng.plsqllang.server;
+package com.oakenscience.plsqllang.server;
 
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.ConsoleErrorListener;
-import org.antlr.v4.runtime.tree.ParseTree;
-import ru.chufeng.plsqllang.parser.*;
+import com.oakenscience.plsqllang.parser.*;
 
 import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.eclipse.lsp4j.launch.LSPLauncher;
 import org.eclipse.lsp4j.services.LanguageClient;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 public class PlSqlServerStdioLauncher {
     public static void main(String[] args) {
